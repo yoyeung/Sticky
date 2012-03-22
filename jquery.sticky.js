@@ -36,6 +36,7 @@
                             .css('position', '')
                             .css('top', '')
 							.css('width','')
+							.css('z-index','')
                             .removeClass(s.className);
                         s.stickyElement.parent().removeClass(s.className);
                         s.currentTop = null;
@@ -56,6 +57,7 @@
                             .css('position', 'fixed')
                             .css('top', newTop)
 							.css('width',lastWidth)
+							.css('z-index','99999')
                             .addClass(s.className);
                         s.stickyElement.parent().addClass(s.className);
                         s.currentTop = newTop;
