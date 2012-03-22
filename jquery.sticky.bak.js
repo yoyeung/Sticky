@@ -35,14 +35,12 @@
                         s.stickyElement
                             .css('position', '')
                             .css('top', '')
-							.css('width','')
                             .removeClass(s.className);
                         s.stickyElement.parent().removeClass(s.className);
                         s.currentTop = null;
                     }
                 }
                 else {
-					var lastWidth = $(s.stickyElement).width();
                     var newTop = documentHeight - s.stickyElement.outerHeight()
                         - s.topSpacing - s.bottomSpacing - scrollTop - extra;
                     if (newTop < 0) {
@@ -50,12 +48,10 @@
                     } else {
                         newTop = s.topSpacing;
                     }
-					
                     if (s.currentTop != newTop) {
                         s.stickyElement
                             .css('position', 'fixed')
                             .css('top', newTop)
-							.css('width',lastWidth)
                             .addClass(s.className);
                         s.stickyElement.parent().addClass(s.className);
                         s.currentTop = newTop;
@@ -78,7 +74,7 @@
                         .addClass(o.wrapperClassName);
                     stickyElement.wrapAll(wrapper)
                     var stickyWrapper = stickyElement.parent();
-                    // stickyWrapper.css('height', stickyElement.outerHeight());
+                    stickyWrapper.css('height', stickyElement.outerHeight());
                     sticked.push({
                         topSpacing: o.topSpacing,
                         bottomSpacing: o.bottomSpacing,
