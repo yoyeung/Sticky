@@ -38,12 +38,14 @@
 							.css('width','')
 							.css('z-index','')
                             .removeClass(s.className);
-                        s.stickyElement.parent().removeClass(s.className);
+                        s.stickyElement.parent().css('height','').removeClass(s.className);
                         s.currentTop = null;
                     }
                 }
                 else {
 					var lastWidth = $(s.stickyElement).width();
+					var lastHeight = s.stickyElement.parent().height();
+					console.log(lastHeight);
                     var newTop = documentHeight - s.stickyElement.outerHeight()
                         - s.topSpacing - s.bottomSpacing - scrollTop - extra;
                     if (newTop < 0) {
@@ -59,7 +61,7 @@
 							.css('width',lastWidth)
 							.css('z-index','99999')
                             .addClass(s.className);
-                        s.stickyElement.parent().addClass(s.className);
+                        s.stickyElement.parent().css('height',lastHeight).addClass(s.className);
                         s.currentTop = newTop;
                     }
                 }
