@@ -6,7 +6,7 @@
   <script type="text/javascript" src="jquery.sticky.js"></script>
   <script>
     $(window).load(function(){
-      $("#sticker").sticky({ topSpacing: 50, className: 'sticky', wrapperClassName: 'my-wrapper' });
+      $("#sticker").sticky({ topSpacing: 50, className: 'sticky', wrapperClassName: 'my-wrapper' ,stopClassName:".the_hidden_position" });
     });
   </script>
   <style>
@@ -20,6 +20,7 @@
       border: 1px solid #ccc;
       width: 340px;
       margin-left: auto;
+      margin-right: auto;
     }
 
     #sticker {
@@ -42,6 +43,15 @@
       margin-left: auto;
       margin-right: auto;
     }
+    .the_end{
+      position: absolute;
+      top:10000px;
+    }
+
+    .the_hidden_position{
+      position: absolute;
+      top:5000px;
+    }
 
   </style>
 </head>
@@ -50,6 +60,9 @@
   <div id="sticker">
     <p>This is the sticky thingy that is really cool.</p>
   </div>
-  <p>This is test this is text this is text at the bottom.</p>
+  <p >This is test this is text this is text at the bottom.</p>
+  <p class='the_hidden_position'>You will be hidden under here.</p>
+
+  <p class='the_end'>The End</p>
 </body>
 </html>

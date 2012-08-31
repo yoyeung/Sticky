@@ -16,6 +16,8 @@
             bottomSpacing: 0,
             className: 'is-sticky',
             wrapperClassName: 'sticky-wrapper',
+            stopClassName: 'sticky-stop-point',
+            hiddenClassName: 'hiddden'
         },
         $window = $(window),
         $document = $(document),
@@ -26,26 +28,27 @@
                 documentHeight = $document.height(),
                 dwh = documentHeight - windowHeight,
                 extra = (scrollTop > dwh) ? dwh - scrollTop : 0;
+
             for (var i = 0; i < sticked.length; i++) {
                 var s = sticked[i],
                     elementTop = s.stickyWrapper.offset().top,
                     etse = elementTop - s.topSpacing - extra;
+                var lastHeight = s.stickyElement.parent().height();
                 if (scrollTop <= etse) {
                     if (s.currentTop !== null) {
                         s.stickyElement
                             .css('position', '')
                             .css('top', '')
-							.css('width','')
-							.css('z-index','')
+                            .css('width','')
+                            .css('z-index','')
                             .removeClass(s.className);
                         s.stickyElement.parent().css('height','').removeClass(s.className);
                         s.currentTop = null;
                     }
                 }
                 else {
-					var lastWidth = $(s.stickyElement).width();
-					var lastHeight = s.stickyElement.parent().height();
-					console.log(lastHeight);
+                    var lastWidth = $(s.stickyElement).width();
+                    
                     var newTop = documentHeight - s.stickyElement.outerHeight()
                         - s.topSpacing - s.bottomSpacing - scrollTop - extra;
                     if (newTop < 0) {
@@ -53,17 +56,30 @@
                     } else {
                         newTop = s.topSpacing;
                     }
-					
+                    
                     if (s.currentTop != newTop) {
                         s.stickyElement
                             .css('position', 'fixed')
                             .css('top', newTop)
-							.css('width',lastWidth)
-							.css('z-index','99999')
+                            .css('width',lastWidth)
+                            .css('z-index','99999')
                             .addClass(s.className);
                         s.stickyElement.parent().css('height',lastHeight).addClass(s.className);
                         s.currentTop = newTop;
                     }
+                }
+                if (s.stickerStopEle){
+                    if( (scrollTop + lastHeight) >= ($(s.stickerStopEle).offset().top - s.topSpacing - extra)){
+                        s.stickyElement
+                            .css('display','none');
+                    }else{
+                        s.stickyElement
+                            .css('display','block');
+                    }
+                }
+                if(s.stickyElement.hasClass(s.hiddenClassName)){
+                    s.stickyElement
+                            .css('display','none');
                 }
             }
         },
@@ -82,6 +98,7 @@
                         .addClass(o.wrapperClassName);
                     stickyElement.wrapAll(wrapper)
                     var stickyWrapper = stickyElement.parent();
+                    var sticker_stop_element = ($(o.stopClassName).size == 0 ? null : $(o.stopClassName)[0])  
                     // stickyWrapper.css('height', stickyElement.outerHeight());
                     sticked.push({
                         topSpacing: o.topSpacing,
@@ -89,7 +106,9 @@
                         stickyElement: stickyElement,
                         currentTop: null,
                         stickyWrapper: stickyWrapper,
-                        className: o.className
+                        className: o.className,
+                        stickerStopEle:sticker_stop_element,
+                        hiddenClassName: o.hiddenClassName
                     });
                 });
             },
